@@ -1,0 +1,306 @@
+createOrReplace
+
+	expression RutaDatos = "C:\...\GVDM04 - Data storytelling\Materiales\datos\" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+
+	table Movimientos
+
+		measure 'Ventas Real' = - CALCULATE(SUM(Movimientos[Amount]), LEFT(Movimientos[G_L_Account_No], 1) = "7")
+			formatString: #,0 €
+		measure 'Ventas Ppto' = - CALCULATE(SUM(Presupuesto[Amount]), LEFT(Presupuesto[G_L_Account_No], 1) = "7")
+			formatString: #,0 €
+		measure 'Ventas Desviación' = [Ventas Real] - [Ventas Ppto]
+			formatString: #,0 €
+		measure 'Ventas % Ejecución' = DIVIDE([Ventas Real], [Ventas Ppto])
+			formatString: 0.0 %
+		measure 'Gastos Real' = CALCULATE(SUM(Movimientos[Amount]), LEFT(Movimientos[G_L_Account_No], 1) = "6")
+			formatString: #,0 €
+		measure 'Gastos Ppto' = CALCULATE(SUM(Presupuesto[Amount]), LEFT(Presupuesto[G_L_Account_No], 1) = "6")
+			formatString: #,0 €
+		measure 'Gastos Desviación' = [Gastos Real] - [Gastos Ppto]
+			formatString: #,0 €
+		measure 'Gastos % Ejecución' = DIVIDE([Gastos Real], [Gastos Ppto])
+			formatString: 0.0 %
+		measure 'Color KPI Ventas' = IF([Ventas % Ejecución] >= 1, "#1BAF7A", "#E34948")
+		measure 'Color KPI Gastos' = IF([Gastos % Ejecución] <= 1, "#1BAF7A", "#E34948")
+		measure 'Ventas Habitaciones' = CALCULATE([Ventas Real], Departamentos[Name] = "Habitaciones")
+			formatString: #,0 €
+		measure 'Ppto Habitaciones' = CALCULATE([Ventas Ppto], Departamentos[Name] = "Habitaciones")
+			formatString: #,0 €
+		measure '% Ejec. Habitaciones' = DIVIDE([Ventas Habitaciones], [Ppto Habitaciones])
+			formatString: 0.0 %
+		measure 'Habitaciones Disponibles' = SUMX(VALUES(Config[Hotel]), CALCULATE(SUM(Config[Habitaciones]))) * COUNTROWS(Calendario)
+			formatString: #,0
+		measure 'RevPAR Hotel' = DIVIDE([Ventas Habitaciones], [Habitaciones Disponibles])
+			formatString: #,0.00 €
+		measure 'RevPAR Sector' = CALCULATE(AVERAGE(Sector[RevPAR]), TREATAS(VALUES(Config[Categoría]), Sector[Categoría]))
+			formatString: #,0.00 €
+		measure 'Índice Hotel' = DIVIDE([RevPAR Hotel], CALCULATE([RevPAR Hotel], REMOVEFILTERS(Calendario), Calendario[Mes Nr] = "1")) * 100
+			formatString: 0.0
+		measure 'Índice Sector' = DIVIDE([RevPAR Sector], CALCULATE([RevPAR Sector], REMOVEFILTERS(Calendario), Calendario[Mes Nr] = "1")) * 100
+			formatString: 0.0
+
+		column Entry_No
+			dataType: int64
+			summarizeBy: none
+			sourceColumn: Entry_No
+		column Posting_Date
+			dataType: dateTime
+			formatString: dd/mm/yyyy
+			sourceColumn: Posting_Date
+		column Amount
+			dataType: double
+			sourceColumn: Amount
+		column Hotel
+			dataType: int64
+			summarizeBy: none
+			sourceColumn: Hotel
+		column Departamento
+			dataType: int64
+			summarizeBy: none
+			sourceColumn: Departamento
+		column G_L_Account_No
+			dataType: int64
+			summarizeBy: none
+			sourceColumn: G_L_Account_No
+
+		partition Movimientos = m
+			mode: import
+			source =
+					let
+					    Origen = Excel.Workbook(File.Contents(RutaDatos & "mcm.xlsx"), null, true),
+					    Hoja = Origen{[Item="movs_contables",Kind="Sheet"]}[Data],
+					    Encabezados = Table.PromoteHeaders(Hoja, [PromoteAllScalars=true]),
+					    Tipos = Table.TransformColumnTypes(Encabezados, {{"Entry_No", Int64.Type}, {"Posting_Date", type datetime}, {"Amount", type number}, {"Hotel", Int64.Type}, {"Departamento", Int64.Type}, {"G_L_Account_No", Int64.Type}})
+					in
+					    Tipos
+
+	table Presupuesto
+
+		column Amount
+			dataType: double
+			sourceColumn: Amount
+		column Date
+			dataType: dateTime
+			formatString: dd/mm/yyyy
+			sourceColumn: Date
+		column G_L_Account_No
+			dataType: int64
+			summarizeBy: none
+			sourceColumn: G_L_Account_No
+		column Entry_No
+			dataType: int64
+			summarizeBy: none
+			sourceColumn: Entry_No
+		column Hotel
+			dataType: int64
+			summarizeBy: none
+			sourceColumn: Hotel
+		column Departamento
+			dataType: int64
+			summarizeBy: none
+			sourceColumn: Departamento
+
+		partition Presupuesto = m
+			mode: import
+			source =
+					let
+					    Origen = Excel.Workbook(File.Contents(RutaDatos & "ptc.xlsx"), null, true),
+					    Hoja = Origen{[Item="movs_presupuestos",Kind="Sheet"]}[Data],
+					    Encabezados = Table.PromoteHeaders(Hoja, [PromoteAllScalars=true]),
+					    Tipos = Table.TransformColumnTypes(Encabezados, {{"Amount", type number}, {"Date", type datetime}, {"G_L_Account_No", Int64.Type}, {"Entry_No", Int64.Type}, {"Hotel", Int64.Type}, {"Departamento", Int64.Type}})
+					in
+					    Tipos
+
+	table Hoteles
+
+		column Code
+			dataType: int64
+			summarizeBy: none
+			sourceColumn: Code
+		column Name
+			dataType: string
+			sourceColumn: Name
+
+		partition Hoteles = m
+			mode: import
+			source =
+					let
+					    Origen = Excel.Workbook(File.Contents(RutaDatos & "Hoteles.xlsx"), null, true),
+					    Hoja = Origen{[Item="hoteles",Kind="Sheet"]}[Data],
+					    Encabezados = Table.PromoteHeaders(Hoja, [PromoteAllScalars=true]),
+					    Tipos = Table.TransformColumnTypes(Encabezados, {{"Code", Int64.Type}, {"Name", type text}})
+					in
+					    Tipos
+
+	table Departamentos
+
+		column Code
+			dataType: int64
+			summarizeBy: none
+			sourceColumn: Code
+		column Name
+			dataType: string
+			sourceColumn: Name
+
+		partition Departamentos = m
+			mode: import
+			source =
+					let
+					    Origen = Excel.Workbook(File.Contents(RutaDatos & "Departamentos.xlsx"), null, true),
+					    Hoja = Origen{[Item="Departamentos",Kind="Sheet"]}[Data],
+					    Encabezados = Table.PromoteHeaders(Hoja, [PromoteAllScalars=true]),
+					    Tipos = Table.TransformColumnTypes(Encabezados, {{"Code", Int64.Type}, {"Name", type text}})
+					in
+					    Tipos
+
+	table Config
+
+		column Hotel
+			dataType: int64
+			summarizeBy: none
+			sourceColumn: Hotel
+		column Habitaciones
+			dataType: int64
+			sourceColumn: Habitaciones
+		column Categoría
+			dataType: string
+			sourceColumn: Categoría
+
+		partition Config = m
+			mode: import
+			source =
+					let
+					    Origen = Excel.Workbook(File.Contents(RutaDatos & "Config. Hotel.xlsx"), null, true),
+					    Hoja = Origen{[Item="Hoja1",Kind="Sheet"]}[Data],
+					    Encabezados = Table.PromoteHeaders(Hoja, [PromoteAllScalars=true]),
+					    Tipos = Table.TransformColumnTypes(Encabezados, {{"Hotel", Int64.Type}, {"Habitaciones", Int64.Type}, {"Categoría", type text}})
+					in
+					    Tipos
+
+	table Categoria
+
+		column Categoría
+			dataType: string
+			sourceColumn: Categoría
+
+		partition Categoria = m
+			mode: import
+			source =
+					let
+					    Origen = Config,
+					    SoloCategoria = Table.SelectColumns(Origen, {"Categoría"}),
+					    SinDuplicados = Table.Distinct(SoloCategoria)
+					in
+					    SinDuplicados
+
+	table Sector
+
+		column Categoría
+			dataType: string
+			sourceColumn: Categoría
+		column Periodo
+			dataType: string
+			sourceColumn: Periodo
+		column RevPAR
+			dataType: double
+			formatString: #,0.00 €
+			sourceColumn: RevPAR
+		column Fecha
+			dataType: dateTime
+			formatString: dd/mm/yyyy
+			sourceColumn: Fecha
+
+		partition Sector = m
+			mode: import
+			source =
+					let
+					    Origen = Excel.Workbook(File.Contents(RutaDatos & "IxH.xlsx"), null, true),
+					    Hoja = Origen{[Item="tabla-2056",Kind="Sheet"]}[Data],
+					    SinTitulos = Table.Skip(Hoja, 7),
+					    Encabezados = Table.PromoteHeaders(SinTitulos, [PromoteAllScalars=true]),
+					    Renombrar = Table.RenameColumns(Encabezados, {{Table.ColumnNames(Encabezados){0}, "Categoría"}}),
+					    SoloDatos = Table.SelectRows(Renombrar, each [Categoría] <> null and Text.Contains(Text.From([Categoría]), "estrellas")),
+					    Limpio = Table.TransformColumns(SoloDatos, {{"Categoría", Text.Trim, type text}}),
+					    Unpivot = Table.UnpivotOtherColumns(Limpio, {"Categoría"}, "Periodo", "RevPAR"),
+					    Fecha = Table.AddColumn(Unpivot, "Fecha", each #date(Number.From(Text.Start([Periodo], 4)), Number.From(Text.AfterDelimiter([Periodo], "M")), 1), type date),
+					    TresEstrellasINE = #table(type table [Categoría = text, Periodo = text, RevPAR = number, Fecha = date], {{"Tres estrellas de oro", "2019M01", 34.98, #date(2019,1,1)}, {"Tres estrellas de oro", "2019M02", 40.07, #date(2019,2,1)}, {"Tres estrellas de oro", "2019M03", 41.16, #date(2019,3,1)}}),
+					    Union = Table.Combine({Fecha, TresEstrellasINE}),
+					    Tipos = Table.TransformColumnTypes(Union, {{"Categoría", type text}, {"Periodo", type text}, {"RevPAR", type number}, {"Fecha", type datetime}})
+					in
+					    Tipos
+
+	table Calendario
+
+		column Date
+			dataType: dateTime
+			formatString: dd/mm/yyyy
+			isNameInferred
+			sourceColumn: [Date]
+		column Año
+			dataType: int64
+			summarizeBy: none
+			isNameInferred
+			sourceColumn: [Año]
+		column 'Mes Nr'
+			dataType: string
+			isNameInferred
+			sourceColumn: [Mes Nr]
+		column Mes
+			dataType: string
+			isNameInferred
+			sourceColumn: [Mes]
+			sortByColumn: 'Mes Nr'
+		column 'Dia Semana Nr'
+			dataType: int64
+			summarizeBy: none
+			isNameInferred
+			sourceColumn: [Dia Semana Nr]
+		column 'Dia semana'
+			dataType: string
+			isNameInferred
+			sourceColumn: [Dia semana]
+		column Trimestre
+			dataType: string
+			isNameInferred
+			sourceColumn: [Trimestre]
+
+		partition Calendario = calculated
+			mode: import
+			source = ADDCOLUMNS(CALENDARAUTO(), "Año", YEAR([Date]), "Mes Nr", FORMAT([Date], "M"), "Mes", FORMAT([Date], "mmmm"), "Dia Semana Nr", WEEKDAY([Date]), "Dia semana", FORMAT([Date], "dddd"), "Trimestre", "T" & FORMAT([Date], "Q"))
+
+	relationship Mov_Hotel
+		fromColumn: Movimientos.Hotel
+		toColumn: Hoteles.Code
+
+	relationship Mov_Depto
+		fromColumn: Movimientos.Departamento
+		toColumn: Departamentos.Code
+
+	relationship Mov_Fecha
+		fromColumn: Movimientos.Posting_Date
+		toColumn: Calendario.Date
+
+	relationship Ppto_Hotel
+		fromColumn: Presupuesto.Hotel
+		toColumn: Hoteles.Code
+
+	relationship Ppto_Depto
+		fromColumn: Presupuesto.Departamento
+		toColumn: Departamentos.Code
+
+	relationship Ppto_Fecha
+		fromColumn: Presupuesto.Date
+		toColumn: Calendario.Date
+
+	relationship Config_Hotel
+		fromColumn: Config.Hotel
+		toColumn: Hoteles.Code
+
+	relationship Config_Categoria
+		fromColumn: Config.Categoría
+		toColumn: Categoria.Categoría
+
+	relationship Sector_Fecha
+		fromColumn: Sector.Fecha
+		toColumn: Calendario.Date
+

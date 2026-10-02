@@ -1,0 +1,8 @@
+customer_data.csv
+Datos de clientes con información demográfica, comportamiento de compra y métricas de engagement. Incluye edad, ingresos, gasto total, segmento y riesgo de churn.
+
+sales_data.csv
+Registro histórico de transacciones de ventas con detalles de productos, regiones, fechas y métricas financieras. Útil para análisis de tendencias y forecasting.
+
+marketing_campaign.csv
+Datos de campañas de marketing con métricas de rendimiento, inversión, conversión y ROI. Permite evaluar efectividad de estrategias de marketing.

@@ -1,0 +1,12 @@
+hbase:001:0> status 'simple'
+active master:  hmaster:16000 1789892494450
+0 backup masters
+2 live servers
+    hbase-distribuido-rs1-1.hbase-distribuido_default:16020 1789892494450
+        requestsPerSecond=0.0, numberOfOnlineRegions=0, usedHeapMB=84, maxHeapMB=384, numberOfStores=0, numberOfStorefiles=0, storefileUncompressedSizeMB=0, storefileSizeMB=0, memstoreSizeMB=0, storefileIndexSizeKB=0, readRequestsCount=0, filteredReadRequestsCount=0, writeRequestsCount=0, rootIndexSizeKB=0, totalStaticIndexSizeKB=0, totalStaticBloomSizeKB=0, totalCompactingKVs=0, currentCompactedKVs=0, compactionProgressPct=NaN, coprocessors=[]
+    hbase-distribuido-rs2-1.hbase-distribuido_default:16020 1789892494480
+        requestsPerSecond=0.0, numberOfOnlineRegions=2, usedHeapMB=63, maxHeapMB=384, numberOfStores=4, numberOfStorefiles=3, storefileUncompressedSizeMB=2, storefileSizeMB=2, compressionRatio=1.0000, memstoreSizeMB=1, storefileIndexSizeKB=2, readRequestsCount=9, filteredReadRequestsCount=0, writeRequestsCount=2, rootIndexSizeKB=2, totalStaticIndexSizeKB=2, totalStaticBloomSizeKB=2, totalCompactingKVs=0, currentCompactedKVs=0, compactionProgressPct=NaN, coprocessors=[MultiRowMutationEndpoint]
+0 dead servers
+Aggregate load: 0, regions: 2
+Took 1.7057 seconds
+hbase:002:0> exit

@@ -1,0 +1,17 @@
+# Entornos y artefactos locales
+__pycache__/
+*.pyc
+.venv/
+venv/
+.env
+.ipynb_checkpoints/
+.DS_Store
+Thumbs.db
+
+# Salidas de modelos y ejecuciones pesadas
+runs/
+*.pt
+*.onnx
+*.mp4
+*.wav
+*.pbix

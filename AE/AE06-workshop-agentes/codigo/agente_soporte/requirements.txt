@@ -1,0 +1,8 @@
+chainlit==2.12.*
+openai>=1.40
+pydantic>=2.6
+email-validator>=2.1
+fastembed>=0.8
+fastapi>=0.110
+uvicorn>=0.29
+python-dotenv>=1.0

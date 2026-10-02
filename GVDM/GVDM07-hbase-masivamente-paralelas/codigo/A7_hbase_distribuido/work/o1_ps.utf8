@@ -1,0 +1,8 @@
+NAME                            IMAGE                 STATUS         PORTS
+hbase-distribuido-datanode1-1   apache/hadoop:3.3.6   Up 4 minutes   
+hbase-distribuido-datanode2-1   apache/hadoop:3.3.6   Up 5 minutes   
+hbase-distribuido-hmaster-1     mbda/hbase:2.5.10     Up 4 minutes   0.0.0.0:16010->16010/tcp, [::]:16010->16010/tcp
+hbase-distribuido-namenode-1    apache/hadoop:3.3.6   Up 5 minutes   0.0.0.0:9870->9870/tcp, [::]:9870->9870/tcp
+hbase-distribuido-rs1-1         mbda/hbase:2.5.10     Up 4 minutes   0.0.0.0:16030->16030/tcp, [::]:16030->16030/tcp
+hbase-distribuido-rs2-1         mbda/hbase:2.5.10     Up 4 minutes   0.0.0.0:16031->16030/tcp, [::]:16031->16030/tcp
+hbase-distribuido-zk1-1         zookeeper:3.8         Up 5 minutes   2181/tcp, 2888/tcp, 3888/tcp, 8080/tcp

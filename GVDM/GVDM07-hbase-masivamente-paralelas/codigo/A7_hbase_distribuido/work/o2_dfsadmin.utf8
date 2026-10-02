@@ -1,0 +1,62 @@
+Configured Capacity: 2162202353664 (1.97 TB)
+Present Capacity: 2034821967888 (1.85 TB)
+DFS Remaining: 2034821898370 (1.85 TB)
+DFS Used: 69518 (67.89 KB)
+DFS Used%: 0.00%
+Replicated Blocks:
+	Under replicated blocks: 29
+	Blocks with corrupt replicas: 0
+	Missing blocks: 0
+	Missing blocks (with replication factor 1): 0
+	Low redundancy blocks with highest priority to recover: 0
+	Pending deletion blocks: 0
+Erasure Coded Block Groups: 
+	Low redundancy block groups: 0
+	Block groups with corrupt internal blocks: 0
+	Missing block groups: 0
+	Low redundancy blocks with highest priority to recover: 0
+	Pending deletion blocks: 0
+
+-------------------------------------------------
+Live datanodes (2):
+
+Name: 172.18.0.3:9866 (hbase-distribuido-datanode2-1.hbase-distribuido_default)
+Hostname: datanode2
+Decommission Status : Normal
+Configured Capacity: 1081101176832 (1006.85 GB)
+DFS Used: 34759 (33.94 KB)
+Non DFS Used: 7624124473 (7.10 GB)
+DFS Remaining: 1017410949185 (947.54 GB)
+DFS Used%: 0.00%
+DFS Remaining%: 94.11%
+Configured Cache Capacity: 0 (0 B)
+Cache Used: 0 (0 B)
+Cache Remaining: 0 (0 B)
+Cache Used%: 100.00%
+Cache Remaining%: 0.00%
+Xceivers: 8
+Last contact: Sun Sep 20 08:20:32 UTC 2026
+Last Block Report: Sun Sep 20 08:16:15 UTC 2026
+Num of Blocks: 29
+
+
+Name: 172.18.0.5:9866 (hbase-distribuido-datanode1-1.hbase-distribuido_default)
+Hostname: datanode1
+Decommission Status : Normal
+Configured Capacity: 1081101176832 (1006.85 GB)
+DFS Used: 34759 (33.94 KB)
+Non DFS Used: 7624124473 (7.10 GB)
+DFS Remaining: 1017410949185 (947.54 GB)
+DFS Used%: 0.00%
+DFS Remaining%: 94.11%
+Configured Cache Capacity: 0 (0 B)
+Cache Used: 0 (0 B)
+Cache Remaining: 0 (0 B)
+Cache Used%: 100.00%
+Cache Remaining%: 0.00%
+Xceivers: 8
+Last contact: Sun Sep 20 08:20:32 UTC 2026
+Last Block Report: Sun Sep 20 08:16:15 UTC 2026
+Num of Blocks: 29
+
+

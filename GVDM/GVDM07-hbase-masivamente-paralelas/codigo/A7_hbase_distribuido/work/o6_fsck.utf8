@@ -1,0 +1,95 @@
+docker : Connecting to namenode via 
+http://namenode:9870/fsck?ugi=hadoop&files=1&blocks=1&locations=1&path=%2Fhbase%2Fdata%2Fdefault
+En línea: 1 Carácter: 263
++ ... s.txt 2>&1; docker compose exec namenode hdfs fsck /hbase/data/defaul ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Connecting to n...Fdata%2Fdefault:String) [], RemoteExcept 
+   ion
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+FSCK started by hadoop (auth:SIMPLE) from /172.18.0.4 for path /hbase/data/default at Sun Sep 20 08:25:01 UTC 2026
+
+/hbase/data/default <dir>
+/hbase/data/default/clientes_dist <dir>
+/hbase/data/default/clientes_dist/.tabledesc <dir>
+/hbase/data/default/clientes_dist/.tabledesc/.tableinfo.0000000001.366 366 bytes, replicated: replication=2, 1 block(s):  OK
+0. BP-438018575-172.18.0.4-1789892143686:blk_1073741877_1055 len=366 Live_repl=2  [DatanodeInfoWithStorage[172.18.0.3:9866,DS-d1f48608-5f74-487a-83c6-233f146d1851,DISK], DatanodeInfoWithStorage[172.18.0.5:9866,DS-ff808ae1-312f-45f2-9651-187c6beaf816,DISK]]
+
+/hbase/data/default/clientes_dist/067c0725753189336359ed30920f188b <dir>
+/hbase/data/default/clientes_dist/067c0725753189336359ed30920f188b/.regioninfo 49 bytes, replicated: replication=2, 1 block(s):  OK
+0. BP-438018575-172.18.0.4-1789892143686:blk_1073741879_1057 len=49 Live_repl=2  [DatanodeInfoWithStorage[172.18.0.3:9866,DS-d1f48608-5f74-487a-83c6-233f146d1851,DISK], DatanodeInfoWithStorage[172.18.0.5:9866,DS-ff808ae1-312f-45f2-9651-187c6beaf816,DISK]]
+
+/hbase/data/default/clientes_dist/067c0725753189336359ed30920f188b/.tmp <dir>
+/hbase/data/default/clientes_dist/067c0725753189336359ed30920f188b/.tmp/datos <dir>
+/hbase/data/default/clientes_dist/067c0725753189336359ed30920f188b/datos <dir>
+/hbase/data/default/clientes_dist/067c0725753189336359ed30920f188b/datos/20778dfd4d8b48e8b5f3c70a07903648 4909 bytes, replicated: replication=2, 1 block(s):  OK
+0. BP-438018575-172.18.0.4-1789892143686:blk_1073741881_1059 len=4909 Live_repl=2  [DatanodeInfoWithStorage[172.18.0.5:9866,DS-ff808ae1-312f-45f2-9651-187c6beaf816,DISK], DatanodeInfoWithStorage[172.18.0.3:9866,DS-d1f48608-5f74-487a-83c6-233f146d1851,DISK]]
+
+/hbase/data/default/clientes_dist/067c0725753189336359ed30920f188b/recovered.edits <dir>
+/hbase/data/default/clientes_dist/067c0725753189336359ed30920f188b/recovered.edits/1.seqid 0 bytes, replicated: replication=2, 0 block(s):  OK
+
+/hbase/data/default/clientes_dist/7f6d9f8c514378c54bf741dc09b90686 <dir>
+/hbase/data/default/clientes_dist/7f6d9f8c514378c54bf741dc09b90686/.regioninfo 50 bytes, replicated: replication=2, 1 block(s):  OK
+0. BP-438018575-172.18.0.4-1789892143686:blk_1073741880_1058 len=50 Live_repl=2  [DatanodeInfoWithStorage[172.18.0.5:9866,DS-ff808ae1-312f-45f2-9651-187c6beaf816,DISK], DatanodeInfoWithStorage[172.18.0.3:9866,DS-d1f48608-5f74-487a-83c6-233f146d1851,DISK]]
+
+/hbase/data/default/clientes_dist/7f6d9f8c514378c54bf741dc09b90686/.tmp <dir>
+/hbase/data/default/clientes_dist/7f6d9f8c514378c54bf741dc09b90686/.tmp/datos <dir>
+/hbase/data/default/clientes_dist/7f6d9f8c514378c54bf741dc09b90686/datos <dir>
+/hbase/data/default/clientes_dist/7f6d9f8c514378c54bf741dc09b90686/datos/94c734414640479f81b4aa4f27ca53bd 4910 bytes, replicated: replication=2, 1 block(s):  OK
+0. BP-438018575-172.18.0.4-1789892143686:blk_1073741882_1060 len=4910 Live_repl=2  [DatanodeInfoWithStorage[172.18.0.5:9866,DS-ff808ae1-312f-45f2-9651-187c6beaf816,DISK], DatanodeInfoWithStorage[172.18.0.3:9866,DS-d1f48608-5f74-487a-83c6-233f146d1851,DISK]]
+
+/hbase/data/default/clientes_dist/7f6d9f8c514378c54bf741dc09b90686/recovered.edits <dir>
+/hbase/data/default/clientes_dist/7f6d9f8c514378c54bf741dc09b90686/recovered.edits/1.seqid 0 bytes, replicated: replication=2, 0 block(s):  OK
+
+/hbase/data/default/clientes_dist/ae3ba522d808d68565a92b3eda06a519 <dir>
+/hbase/data/default/clientes_dist/ae3ba522d808d68565a92b3eda06a519/.regioninfo 49 bytes, replicated: replication=2, 1 block(s):  OK
+0. BP-438018575-172.18.0.4-1789892143686:blk_1073741878_1056 len=49 Live_repl=2  [DatanodeInfoWithStorage[172.18.0.3:9866,DS-d1f48608-5f74-487a-83c6-233f146d1851,DISK], DatanodeInfoWithStorage[172.18.0.5:9866,DS-ff808ae1-312f-45f2-9651-187c6beaf816,DISK]]
+
+/hbase/data/default/clientes_dist/ae3ba522d808d68565a92b3eda06a519/.tmp <dir>
+/hbase/data/default/clientes_dist/ae3ba522d808d68565a92b3eda06a519/.tmp/datos <dir>
+/hbase/data/default/clientes_dist/ae3ba522d808d68565a92b3eda06a519/datos <dir>
+/hbase/data/default/clientes_dist/ae3ba522d808d68565a92b3eda06a519/datos/63e96323095d49f296b6e975de9fae40 4953 bytes, replicated: replication=2, 1 block(s):  OK
+0. BP-438018575-172.18.0.4-1789892143686:blk_1073741883_1061 len=4953 Live_repl=2  [DatanodeInfoWithStorage[172.18.0.5:9866,DS-ff808ae1-312f-45f2-9651-187c6beaf816,DISK], DatanodeInfoWithStorage[172.18.0.3:9866,DS-d1f48608-5f74-487a-83c6-233f146d1851,DISK]]
+
+/hbase/data/default/clientes_dist/ae3ba522d808d68565a92b3eda06a519/recovered.edits <dir>
+/hbase/data/default/clientes_dist/ae3ba522d808d68565a92b3eda06a519/recovered.edits/1.seqid 0 bytes, replicated: replication=2, 0 block(s):  OK
+
+
+Status: HEALTHY
+ Number of data-nodes:	2
+ Number of racks:		1
+ Total dirs:			18
+ Total symlinks:		0
+
+Replicated Blocks:
+ Total size:	15286 B
+ Total files:	10
+ Total blocks (validated):	7 (avg. block size 2183 B)
+ Minimally replicated blocks:	7 (100.0 %)
+ Over-replicated blocks:	0 (0.0 %)
+ Under-replicated blocks:	0 (0.0 %)
+ Mis-replicated blocks:		0 (0.0 %)
+ Default replication factor:	2
+ Average block replication:	2.0
+ Missing blocks:		0
+ Corrupt blocks:		0
+ Missing replicas:		0 (0.0 %)
+ Blocks queued for replication:	0
+
+Erasure Coded Block Groups:
+ Total size:	0 B
+ Total files:	0
+ Total block groups (validated):	0
+ Minimally erasure-coded block groups:	0
+ Over-erasure-coded block groups:	0
+ Under-erasure-coded block groups:	0
+ Unsatisfactory placement block groups:	0
+ Average block group size:	0.0
+ Missing block groups:		0
+ Corrupt block groups:		0
+ Missing internal blocks:	0
+ Blocks queued for replication:	0
+FSCK ended at Sun Sep 20 08:25:01 UTC 2026 in 107 milliseconds
+
+
+The filesystem under path '/hbase/data/default' is HEALTHY

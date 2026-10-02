@@ -1,0 +1,53 @@
+name: hbase-distribuido
+# Clúster HBase completamente distribuido simulado con contenedores (un contenedor = un nodo):
+#   HDFS: namenode + datanode1 + datanode2  |  ZooKeeper: zk1  |  HBase: hmaster + rs1 + rs2
+x-hadoop: &hadoop
+  image: apache/hadoop:3.3.6
+  env_file: ./hadoop.env
+  environment: &hadoopenv
+    HADOOP_HEAPSIZE_MAX: 256m
+x-hbase: &hbase
+  build: ./hbase
+  image: mbda/hbase:2.5.10
+  restart: on-failure
+  environment:
+    HBASE_HEAPSIZE: 384m
+  volumes:
+    - ./hbase/hbase-site.xml:/opt/hbase/conf/hbase-site.xml:ro
+    - ./work:/work
+  depends_on: [namenode, datanode1, datanode2, zk1]
+services:
+  namenode:
+    <<: *hadoop
+    hostname: namenode
+    command: ["hdfs", "namenode"]
+    environment:
+      <<: *hadoopenv
+      ENSURE_NAMENODE_DIR: /tmp/hadoop-hadoop/dfs/name
+    ports: ["9870:9870"]
+  datanode1:
+    <<: *hadoop
+    hostname: datanode1
+    command: ["hdfs", "datanode"]
+  datanode2:
+    <<: *hadoop
+    hostname: datanode2
+    command: ["hdfs", "datanode"]
+  zk1:
+    image: zookeeper:3.8
+    hostname: zk1
+  hmaster:
+    <<: *hbase
+    hostname: hmaster
+    command: ["hbase", "master", "start"]
+    ports: ["16010:16010"]
+  rs1:
+    <<: *hbase
+    hostname: rs1
+    command: ["hbase", "regionserver", "start"]
+    ports: ["16030:16030"]
+  rs2:
+    <<: *hbase
+    hostname: rs2
+    command: ["hbase", "regionserver", "start"]
+    ports: ["16031:16030"]

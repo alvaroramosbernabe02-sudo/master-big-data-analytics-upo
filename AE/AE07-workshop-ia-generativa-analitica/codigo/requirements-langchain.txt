@@ -1,0 +1,12 @@
+# LangChain Requirements
+langchain>=0.2.0
+langchain-groq>=0.1.0
+langchain-core>=0.2.0
+langchainhub>=0.1.0
+
+# Core dependencies
+python-dotenv>=1.2.2
+streamlit==1.29.0
+
+# Utilities
+requests==2.31.0

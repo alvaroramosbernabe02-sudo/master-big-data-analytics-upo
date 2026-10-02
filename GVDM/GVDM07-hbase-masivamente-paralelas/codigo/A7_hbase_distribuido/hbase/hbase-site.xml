@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<configuration>
+  <!-- Modo completamente distribuido: master y regionservers en contenedores distintos -->
+  <property><name>hbase.cluster.distributed</name><value>true</value></property>
+  <!-- Datos en HDFS (NameNode del clúster), no en el sistema de ficheros local -->
+  <property><name>hbase.rootdir</name><value>hdfs://namenode:8020/hbase</value></property>
+  <!-- ZooKeeper externo (contenedor zk1), no gestionado por HBase -->
+  <property><name>hbase.zookeeper.quorum</name><value>zk1</value></property>
+  <property><name>hbase.zookeeper.property.clientPort</name><value>2181</value></property>
+  <!-- Factor de replicación de los ficheros que escribe HBase = nº de DataNodes -->
+  <property><name>dfs.replication</name><value>2</value></property>
+  <property><name>dfs.client.use.datanode.hostname</name><value>true</value></property>
+  <property><name>hbase.wal.provider</name><value>filesystem</value></property>
+</configuration>
